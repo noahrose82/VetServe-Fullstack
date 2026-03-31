@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Service Requests</h2>
+    <a class="btn btn-primary" [routerLink]="['/service-requests/create']">
+      + New Request
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="alert alert-info">Loading...</div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && requests.length === 0" class="alert alert-warning">
+    No service requests found.
+  </div>
+
+  <!-- Data Table -->
+  <table class="table table-bordered table-striped" *ngIf="!loading && requests.length > 0">
+    <thead>
+      <tr>
+        <th style="width: 70px;">ID</th>
+        <th style="width: 160px;">Category</th>
+        <th>Description</th>
+        <th style="width: 140px;">Status</th>
+        <th style="width: 180px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of requests">
+        <td>{{ r.id }}</td>
+        <td>{{ r.category }}</td>
+        <td>{{ r.description }}</td>
+        <td>{{ r.status }}</td>
+        <td>
+          <a class="btn btn-sm btn-outline-secondary me-2"
+             [routerLink]="['/service-requests', r.id, 'edit']">
+            Edit
+          </a>
+          <button class="btn btn-sm btn-outline-danger" (click)="onDelete(r.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-center mt-3" *ngIf="hasMore && !loading">
+  <button class="btn btn-outline-primary" (click)="loadMore()">
+    Load More
+  </button>
+</div>
+
+<div *ngIf="loading" class="alert alert-info mt-3">Loading more...</div>
+
+<div *ngIf="!hasMore && requests.length > 0" class="alert alert-light mt-3 text-center">
+  No more items to load
+</div>
+</div>
