@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+target/
+bin/
+obj/
+.vscode/
+.idea/
+.angular/
+.env
+*.log
+*.zip
+.vs/
+.angular/
